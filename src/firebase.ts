@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCobJ0KuJwXeZqe6RD2SESp4RBT8y740KQ",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: "moviedb-bab97.firebaseapp.com",
   projectId: "moviedb-bab97",
   storageBucket: "moviedb-bab97.firebasestorage.app",
