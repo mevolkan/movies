@@ -31,13 +31,13 @@ export default function Home() {
       </div>
       <div className="mt-4 flex justify-between">
         <button
-          className="bg-gray-200 px-4 py-2 rounded"
+          className="bg-gray-200 px-4 py-2 rounded text-black"
           onClick={() => setPage((p) => Math.max(1, p - 1))}
         >
           Previous
         </button>
         <button
-          className="bg-gray-200 px-4 py-2 rounded"
+          className="bg-gray-200 px-4 py-2 rounded text-black"
           onClick={() => setPage((p) => p + 1)}
         >
           Next
