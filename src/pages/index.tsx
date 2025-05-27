@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { fetchPopularMovies, searchMovies } from "@/lib/api/movies";
 import MovieCard from "@/components/MovieCard";
 import { useMovieStore } from "@/store";
 
 export default function Home() {
-  const [movies, setMovies] = useState<any[]>([]);
-  const [page, setPage] = useState(1);
-  const { searchQuery, setSearchQuery } = useMovieStore();
+  const { movies, page, searchQuery, setMovies, setPage, setSearchQuery } = useMovieStore();
 
   const getMovies = async () => {
     const data = searchQuery ? await searchMovies(searchQuery) : await fetchPopularMovies(page);
@@ -34,13 +32,13 @@ export default function Home() {
       <div className="mt-4 flex justify-between">
         <button
           className="bg-gray-200 px-4 py-2 rounded text-black"
-          onClick={() => setPage((p) => Math.max(1, p - 1))}
+          onClick={() => setPage(Math.max(1, page - 1))}
         >
           Previous
         </button>
         <button
           className="bg-gray-200 px-4 py-2 rounded text-black"
-          onClick={() => setPage((p) => p + 1)}
+          onClick={() => setPage(page + 1)}
         >
           Next
         </button>
