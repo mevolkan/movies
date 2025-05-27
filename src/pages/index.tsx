@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
 import { fetchPopularMovies, searchMovies } from "@/lib/api/movies";
 import MovieCard from "@/components/MovieCard";
+import { useMovieStore } from "@/store";
 
 export default function Home() {
   const [movies, setMovies] = useState<any[]>([]);
-  const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
+  const { searchQuery, setSearchQuery } = useMovieStore();
 
   const getMovies = async () => {
-    const data = query ? await searchMovies(query) : await fetchPopularMovies(page);
+    const data = searchQuery ? await searchMovies(searchQuery) : await fetchPopularMovies(page);
     setMovies(data);
   };
 
   useEffect(() => {
     getMovies();
-  }, [query, page]);
+  }, [searchQuery, page]);
 
   return (
     <div className="p-4 max-w-6xl mx-auto">
@@ -22,7 +23,8 @@ export default function Home() {
       <input
         className="border p-2 w-full mb-4"
         placeholder="Search movies..."
-        onChange={(e) => setQuery(e.target.value)}
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
         {movies.map((movie) => (
