@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { fetchPopularMovies, searchMovies } from "@/lib/api/movies";
 import MovieCard from "@/components/MovieCard";
 import { useMovieStore } from "@/store";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const { movies, page, searchQuery, setMovies, setPage, setSearchQuery } = useMovieStore();
@@ -30,18 +31,18 @@ export default function Home() {
         ))}
       </div>
       <div className="mt-4 flex justify-between">
-        <button
+        <Button
           className="bg-gray-200 px-4 py-2 rounded text-black"
           onClick={() => setPage(Math.max(1, page - 1))}
         >
           Previous
-        </button>
-        <button
+        </Button>
+        <Button
           className="bg-gray-200 px-4 py-2 rounded text-black"
           onClick={() => setPage(page + 1)}
         >
           Next
-        </button>
+        </Button>
       </div>
     </div>
   );

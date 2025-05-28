@@ -2,6 +2,7 @@ import { auth, provider } from "../lib/firebase";
 import { signInWithPopup } from "firebase/auth";
 import { useState, useEffect } from "react";
 import { User } from 'firebase/auth';
+import { Button } from "@/components/ui/button";
 
 
 export default function Login() {
@@ -31,20 +32,20 @@ export default function Login() {
           <p className="text-green-600 font-medium mb-2">
             Welcome, {user.displayName}!
           </p>
-          <button
+          <Button
             onClick={() => auth.signOut()}
             className="bg-red-500 text-white p-3 rounded"
           >
             Sign Out
-          </button>
+          </Button>
         </div>
       ) : (
-        <button
+        <Button
           onClick={handleLogin}
           className="bg-blue-500 text-white p-3 rounded"
         >
           Sign in with Google
-        </button>
+        </Button>
       )}
     </div>
   );
