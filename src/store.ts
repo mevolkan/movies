@@ -1,10 +1,19 @@
 import { create } from "zustand";
 
+interface Movie {
+  id: number;
+  title: string;
+  poster_path: string;
+  overview: string;
+  release_date: string;
+  vote_average: number;
+}
+
 interface MovieStore {
-  movies: any[];
+  movies: Movie[];
   page: number;
   searchQuery: string;
-  setMovies: (movies: any[]) => void;
+  setMovies: (movies: Movie[]) => void;
   setPage: (page: number) => void;
   setSearchQuery: (query: string) => void;
 }
