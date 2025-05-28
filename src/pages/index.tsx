@@ -3,6 +3,7 @@ import { fetchPopularMovies, searchMovies } from "@/lib/api/movies";
 import MovieCard from "@/components/MovieCard";
 import { useMovieStore } from "@/store";
 import { Button } from "@/components/ui/button";
+import { ChevronRight, ChevronLeft } from "lucide-react";
 
 export default function Home() {
   const { movies, page, searchQuery, setMovies, setPage, setSearchQuery } = useMovieStore();
@@ -35,6 +36,7 @@ export default function Home() {
           className="bg-gray-200 px-4 py-2 rounded text-black"
           onClick={() => setPage(Math.max(1, page - 1))}
         >
+          <ChevronLeft />
           Previous
         </Button>
         <Button
@@ -42,6 +44,7 @@ export default function Home() {
           onClick={() => setPage(page + 1)}
         >
           Next
+          <ChevronRight />
         </Button>
       </div>
     </div>
