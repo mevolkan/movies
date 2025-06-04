@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { fetchPopularMovies, searchMovies } from "@/lib/api/movies";
 import MovieCard from "@/components/MovieCard";
 import { useMovieStore } from "@/store";
@@ -11,8 +11,10 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
   const {
     movies,
     page,
@@ -25,12 +27,15 @@ export default function Home() {
   } = useMovieStore();
 
   const getMovies = async () => {
+    setIsLoading(true);
     const data = searchQuery
       ? await searchMovies(searchQuery, page)
       : await fetchPopularMovies(page);
     setMovies(data.movies);
     setTotalPages(data.totalPages);
+    setIsLoading(false);
   };
+
 
   useEffect(() => {
     getMovies();
@@ -46,12 +51,21 @@ export default function Home() {
         onChange={(e) => setSearchQuery(e.target.value)}
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {movies.map((movie) => (
-          <MovieCard key={movie.id} movie={movie} />
-        ))}
+        {isLoading
+          ? Array(6).fill(0).map((_, index) => (
+              <div key={index} className="space-y-3">
+                <Skeleton className="h-[300px] w-full rounded-xl" />
+                <Skeleton className="h-4 w-[250px]" />
+                <Skeleton className="h-4 w-[200px]" />
+              </div>
+            ))
+          : movies.map((movie) => (
+              <MovieCard key={movie.id} movie={movie} />
+            ))}
       </div>
       <div className="mt-4">
-        <Pagination>
+        {!isLoading && (
+            <Pagination>
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
@@ -122,6 +136,7 @@ export default function Home() {
             </PaginationItem>
           </PaginationContent>
         </Pagination>
+        )}
       </div>
     </div>
   );
