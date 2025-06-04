@@ -4,18 +4,31 @@ import MovieCard from "@/components/MovieCard";
 import { useMovieStore } from "@/store";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, ChevronLeft } from "lucide-react";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination"
 
 export default function Home() {
-  const { movies, page, searchQuery, setMovies, setPage, setSearchQuery } = useMovieStore();
+  const { movies, page, totalPages, searchQuery, setMovies, setPage, setTotalPages, setSearchQuery } = useMovieStore();
 
   const getMovies = async () => {
-    const data = searchQuery ? await searchMovies(searchQuery) : await fetchPopularMovies(page);
-    setMovies(data);
+    const data = searchQuery 
+      ? await searchMovies(searchQuery, page)
+      : await fetchPopularMovies(page);
+    setMovies(data.movies);
+    setTotalPages(data.totalPages);
   };
 
   useEffect(() => {
     getMovies();
   }, [searchQuery, page]);
+
 
   return (
     <div className="p-4 max-w-6xl mx-auto">
@@ -31,22 +44,76 @@ export default function Home() {
           <MovieCard key={movie.id} movie={movie} />
         ))}
       </div>
-      <div className="mt-4 flex justify-between">
-        <Button
-          className="bg-gray-200 px-4 py-2 rounded text-black"
+     <div className="mt-4">
+  <Pagination>
+    <PaginationContent>
+      <PaginationItem>
+        <PaginationPrevious 
           onClick={() => setPage(Math.max(1, page - 1))}
+          disabled={page === 1}
+        />
+      </PaginationItem>
+
+      {/* First page */}
+      <PaginationItem>
+        <PaginationLink
+          onClick={() => setPage(1)}
+          isActive={page === 1}
         >
-          <ChevronLeft />
-          Previous
-        </Button>
-        <Button
-          className="bg-gray-200 px-4 py-2 rounded text-black"
-          onClick={() => setPage(page + 1)}
-        >
-          Next
-          <ChevronRight />
-        </Button>
-      </div>
+          1
+        </PaginationLink>
+      </PaginationItem>
+
+      {/* Show ellipsis if there are many pages before current */}
+      {page > 3 && <PaginationItem><PaginationEllipsis /></PaginationItem>}
+
+      {/* Pages around current page */}
+      {page > 2 && (
+        <PaginationItem>
+          <PaginationLink onClick={() => setPage(page - 1)}>
+            {page - 1}
+          </PaginationLink>
+        </PaginationItem>
+      )}
+      {page > 1 && page < totalPages && (
+        <PaginationItem>
+          <PaginationLink isActive>
+            {page}
+          </PaginationLink>
+        </PaginationItem>
+      )}
+      {page < totalPages - 1 && (
+        <PaginationItem>
+          <PaginationLink onClick={() => setPage(page + 1)}>
+            {page + 1}
+          </PaginationLink>
+        </PaginationItem>
+      )}
+
+      {/* Show ellipsis if there are many pages after current */}
+      {page < totalPages - 2 && <PaginationItem><PaginationEllipsis /></PaginationItem>}
+
+      {/* Last page */}
+      {totalPages > 1 && (
+        <PaginationItem>
+          <PaginationLink
+            onClick={() => setPage(totalPages)}
+            isActive={page === totalPages}
+          >
+            {totalPages}
+          </PaginationLink>
+        </PaginationItem>
+      )}
+
+      <PaginationItem>
+        <PaginationNext 
+          onClick={() => setPage(Math.min(totalPages, page + 1))}
+          disabled={page === totalPages}
+        />
+      </PaginationItem>
+    </PaginationContent>
+  </Pagination>
+</div>
     </div>
   );
 }
