@@ -6,17 +6,20 @@ import {
   // CardHeader,
   // CardTitle,
 } from "@/components/ui/card"
+import { Movie } from "../types"
+import { useState } from "react"
+import { MovieModal } from "./MovieModal"
 
-type Movie = {
-  id: number;
-  title: string;
-  poster_path: string;
-  overview: string;
-};
+interface MovieCardProps {
+  movie: Movie
+}
+
 
 export default function MovieCard({ movie }: { movie: Movie }) {
+  const [isModalOpen, setIsModalOpen] = useState(false)
   return (
-    <Card className="p-0 border rounded shadow hover:shadow-lg transition">
+    <>
+    <Card className="p-0 border rounded shadow hover:shadow-lg transition"  onClick={() => setIsModalOpen(true)}>
       <img
         className="w-full h-auto"
         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
@@ -27,5 +30,12 @@ export default function MovieCard({ movie }: { movie: Movie }) {
       <p className="text-sm text-gray-600">{movie.overview?.slice(0, 100)}...</p>
       </CardContent>
     </Card>
+    <MovieModal
+        movie={movie}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
+    </>
+    
   );
 }

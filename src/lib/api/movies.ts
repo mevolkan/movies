@@ -22,6 +22,7 @@ export const fetchPopularMovies = async (page: number) => {
     `${BASE_URL}/movie/popular?api_key=${API_KEY}&page=${page}`
   );
   const data = await response.json();
+  console.log(data);
   return {
     movies: data.results,
     totalPages: data.total_pages
