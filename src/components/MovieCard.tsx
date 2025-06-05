@@ -10,9 +10,9 @@ import { Movie } from "../types"
 import { useState } from "react"
 import { MovieModal } from "./MovieModal"
 
-interface MovieCardProps {
-  movie: Movie
-}
+// interface MovieCardProps {
+//   movie: Movie
+// }
 
 
 export default function MovieCard({ movie }: { movie: Movie }) {

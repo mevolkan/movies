@@ -8,8 +8,8 @@ import {
   PaginationEllipsis,
   PaginationItem,
   PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
+  PaginationButtonNext,
+  PaginationButtonPrevious,
 } from "@/components/ui/pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Navbar } from "@/components/Navbar";
@@ -70,7 +70,7 @@ export default function Home() {
             <Pagination>
               <PaginationContent>
                 <PaginationItem>
-                  <PaginationPrevious
+                  <PaginationButtonPrevious
                     onClick={() => setPage(Math.max(1, page - 1))}
                     disabled={page === 1}
                   />
@@ -134,7 +134,7 @@ export default function Home() {
                 )}
 
                 <PaginationItem>
-                  <PaginationNext
+                  <PaginationButtonNext
                     onClick={() => setPage(Math.min(totalPages, page + 1))}
                     disabled={page === totalPages}
                   />

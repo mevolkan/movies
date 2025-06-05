@@ -99,6 +99,48 @@ function PaginationNext({
   )
 }
 
+export function PaginationButtonPrevious({ 
+  className,
+  isDisabled,
+  ...props
+}: React.ComponentProps<typeof Button> & { isDisabled?: boolean }) {
+  return (
+    <Button
+      {...props}
+      className={cn(
+        "gap-1 pl-2.5",
+        {
+          "pointer-events-none opacity-50": isDisabled
+        },
+        className
+      )}
+    >
+      Previous
+    </Button>
+  )
+}
+
+export function PaginationButtonNext({ 
+  className,
+  isDisabled,
+  ...props
+}: React.ComponentProps<typeof Button> & { isDisabled?: boolean }) {
+  return (
+    <Button
+      {...props}
+      className={cn(
+        "gap-1 pr-2.5",
+        {
+          "pointer-events-none opacity-50": isDisabled
+        },
+        className
+      )}
+    >
+      Next
+    </Button>
+  )
+}
+
 function PaginationEllipsis({
   className,
   ...props
