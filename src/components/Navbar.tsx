@@ -1,9 +1,9 @@
-import * as React from "react";
-import Link from "next/link";
-import {  UserIcon } from "lucide-react";
-import { auth } from "@/lib/firebase";
-import { useEffect, useState } from "react";
-import { User } from "firebase/auth";
+import * as React from "react"
+import Link from "next/link"
+import {  UserIcon } from "lucide-react"
+import { getFirebaseAuth } from "@/lib/firebase"
+import { useEffect, useState } from "react"
+import { User } from "firebase/auth"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -20,7 +20,7 @@ export function Navbar() {
       const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = getFirebaseAuth().onAuthStateChanged((user) => {
       setUser(user);
     });
     return () => unsubscribe();

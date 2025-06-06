@@ -7,11 +7,11 @@ import {
 } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
 import { Movie } from "../types"
-import { auth } from "@/lib/firebase"
+import { getFirebaseAuth } from "@/lib/firebase"
 import { Button } from "./ui/button"
 import Link from "next/link"
-import { TbRating18Plus } from "react-icons/tb";
-import { getGenreName } from "@/lib/genres";
+import { TbRating18Plus } from "react-icons/tb"
+import { getGenreName } from "@/lib/genres"
 
 interface MovieModalProps {
   movie: Movie | null
@@ -20,7 +20,7 @@ interface MovieModalProps {
 }
 
 export function MovieModal({ movie, isOpen, onClose }: MovieModalProps) {
-  const user = auth.currentUser
+const user = getFirebaseAuth().currentUser;
 
   if (!movie) return null
 

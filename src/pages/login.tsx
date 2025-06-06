@@ -1,4 +1,4 @@
-import { auth, provider } from "../lib/firebase";
+import { getFirebaseAuth, getProvider } from "@/lib/firebase"
 import { signInWithPopup } from "firebase/auth";
 import { useState, useEffect } from "react";
 import { User } from 'firebase/auth';
@@ -6,10 +6,11 @@ import { Button } from "@/components/ui/button";
 
 
 export default function Login() {
+  const provider = getProvider();
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = getFirebaseAuth().onAuthStateChanged((user) => {
       setUser(user);
     });
 
@@ -19,7 +20,7 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
-      await signInWithPopup(auth, provider);
+      await signInWithPopup(getFirebaseAuth(), provider);
     } catch (err) {
       console.error("Login error", err);
     }
@@ -33,7 +34,7 @@ export default function Login() {
             Welcome, {user.displayName}!
           </p>
           <Button
-            onClick={() => auth.signOut()}
+            onClick={() => getFirebaseAuth().signOut()}
             className="bg-red-500 text-white p-3 rounded"
           >
             Sign Out
